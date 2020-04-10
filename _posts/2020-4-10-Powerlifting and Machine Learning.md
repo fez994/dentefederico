@@ -10,4 +10,4 @@ Objectives:
 
 ## 1.1. Context  
 
-The dataset that I used is a snapshot of the OpenPowerlifting Database as of April 2019. OepnPowerlifting is creating a public-domain archive of powerlifting history. Powerlifting is a sport in which competitors compete to lift the most weight for their class in three separate barbell lifts: Squat, bench and Deadlift.  
+The dataset that I used is a snapshot of the OpenPowerlifting Database as of April 2019. OepnPowerlifting is creating a public-domain archive of powerlifting history. Powerlifting is a sport in which competitors compete to lift the most weight for their class in three separate barbell lifts: Squat, Bench and Deadlift.  
