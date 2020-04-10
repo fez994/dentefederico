@@ -1,1 +1,0 @@
-# Powerlifting and machine learning
