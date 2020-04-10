@@ -1,5 +1,3 @@
-# Powerlifting and Machine Learning 
-
 ## 1.0 Introduction   
 
 I spent the last week studying machine learning, algorithms, data analysis and statistics. I’m a firm believer that the best way to learn something is by doing. This is the result of my first machine learning project using Scikit-Learn, MatPlotLib and Pandas.  
