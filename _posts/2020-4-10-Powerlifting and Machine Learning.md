@@ -14,7 +14,7 @@ The dataset that I used is a snapshot of the OpenPowerlifting Database as of Apr
 
 ## 2.0 Summarize Data
 
-Machine learning algorithms learn from data. It is critical that I feed them the right data for the problem i want to solve. Even if I have good data, I need to make sure that it is in a useful scale, format and even that meaningful features are included.
+Machine learning algorithms learn from data. It is critical that you feed them the right data for the problem you want to solve. Even if you have good data, you need to make sure that it is in a useful scale, format and even that meaningful features are included.
 Let's take a quick look into the OpenPowerlifting data: 
 
 ```
@@ -25,6 +25,7 @@ print(dataset.shape)
 print(dataset.head(10))
 
 ```
+Result: 
 
 ```
 (1423354, 37)
@@ -42,3 +43,109 @@ print(dataset.head(10))
 ```
 
 1423354 instances, 37 attributes 
+
+Powerlifting is a pretty fragmented sport. Which means that there are hundreds if not thousand of different federations, each one with their own rules regarding weightclasses, equipment and drug tests. This is evident by taking a quick look at the unique weight classes in the data
+
+```
+print('Number of unique weightclass: ' + str(dataset['WeightClassKg'].nunique()))
+
+Result: 
+Number of unique weightclasses: 224
+```
+
+224 unique weight classes are way too much, i'll reduce them to 15:
+
+
+Man:  59 kg, 66 kg, 74 kg, 83 kg, 93 kg, 105 kg, 120 kg, 120 kg+
+
+
+
+
+Women: 47 kg, 52 kg, 57 kg, 63 kg, 72 kg, 84 kg, 84 kg+
+
+Those are the weightclasses currently used by the IPF (International Powerlifting Federation) 
+
+## Selecting Data
+
+You need to consider what data you actually need to address the question or problem you are working on. For this project, i'll only consider athletes that train RAW (No equipment), and i'll include both Tested and Non tested divisions. This is because the difference between natural athletes and enhanced athletes is not that big, and sometimes tested athletes are even stronger than untested ones. The only column that i'm going to keep for training are Gender, BodyweightKg, TotalKg. 
+
+### Strength Classification
+
+Andrius Virbičianskas published tables (0.1) with athletes level based on the same data that i'm using. The separation between classes was done using standard deviations. For example World Class represents 0.63% of all lifters (that’s usually in World TOP 100 in respective weight categories) and is +2.5 std from mean.
+
+![alt text](https://i.imgur.com/DSoHewV.png "0.1")
+
+```
+#Filtering data for RAW totals ONLY
+dataset = dataset[dataset['Equipment'].map(len) < 4]
+
+# Bodyweight Classing by Sex, using IPF standards
+male = dataset[dataset['Sex']=='M']
+female = dataset[dataset['Sex'] == 'F']
+
+def male_weight_class(x):
+    if x <= 59:
+        return 59
+    if x <= 66 and x > 59:
+        return 66
+    if x <= 74 and x > 66:
+        return 74
+    if x <= 83 and x > 74:
+        return 83
+    if x <= 93 and x > 83:
+        return 93
+    if x <= 105 and x > 94:
+        return 105
+    if x <= 120 and x > 105:
+        return 120
+    if x > 120:
+        return 121
+        
+def female_weight_class(x):
+    if x <= 47:
+        return 47
+    if x <= 52 and x > 47:
+        return 52
+    if x <= 57 and x > 52:
+        return 57
+    if x <= 63 and x > 57:
+        return 63
+    if x <= 72 and x > 63:
+        return 72
+    if x <= 84 and x > 72:
+        return 84
+    if x > 84:
+        return 85
+
+#Adding WeightClasses 
+male['WeightClassKg'] = male['BodyweightKg'].apply(male_weight_class)
+female['WeightClassKg'] = female['BodyweightKg'].apply(female_weight_class)
+
+dataset = pd.concat([male, female])
+
+## Strength classification, this is a snippet of the code, i did this for every weight class bot male and female 
+def strengthStandards(y):
+
+#93kg Class
+    if y['Sex'] == 'M' and y['WeightClassKg'] == 93 and y['TotalKg'] <= 342:
+        return 'Beginner'
+    if y['Sex'] == 'M' and y['WeightClassKg'] == 93 and y['TotalKg'] > 342 and y['TotalKg'] <= 455:
+        return 'Intermediate'
+    if y['Sex'] == 'M' and y['WeightClassKg'] == 93 and y['TotalKg'] > 455 and y['TotalKg'] <= 545:
+        return 'Advanced'
+    if y['Sex'] == 'M' and y['WeightClassKg'] == 93 and y['TotalKg'] > 545 and y['TotalKg'] <= 632:
+        return 'Master'
+    if y['Sex'] == 'M' and y['WeightClassKg'] == 93 and y['TotalKg'] > 632 and y['TotalKg'] <= 722:
+        return 'Elite'
+    if y['Sex'] == 'M' and y['WeightClassKg'] == 93 and y['TotalKg'] > 722:
+        return 'World Class'
+
+
+```
+## Assigning every athlete a strength level 
+
+
+
+
+
+
