@@ -155,7 +155,7 @@ new_file = dataset[keep_col]
 new_file.to_csv('cleandata.csv', index=False)
 ```
 
-Now that the data is ready, let's take a quick look at it. 
+The data is now ready, let's take a quick look at it. 
 
 ```
   Sex  BodyweightKg  TotalKg  WeightClassKg StrengthLevel
@@ -172,9 +172,20 @@ Now that the data is ready, let's take a quick look at it.
 
 ```
 
-And that's it, 5 attributes with only the informations that we need. Now it's time to fullfill the objectives that we set ourself at the start of the article: Better understand the level of athletes that partake in Powerlifting competition. 
+And that's it, 5 attributes with only the informations that we need. It's time to fullfill the objectives that we set ourself at the start of the article: Better understand the level of athletes that partake in Powerlifting competition. 
 
-## Better understand the level of athletes that partake in Powerlifting competition
+## Strength Level of Powerlifters 
+
+Let's group all the athletes into a nice graph so that we can look at the data in an easy to understand way. 
 
 
+```
+slevel = dataset.groupby(['StrengthLevel']).size()
+slevel.plot.bar()
+plt.tight_layout()
+plt.show()
+
+```
+
+![alt text](https://i.imgur.com/CGW4VYV.png "0.2")
 
