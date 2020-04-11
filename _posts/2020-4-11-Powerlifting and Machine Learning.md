@@ -1,6 +1,4 @@
-## 1.0 Introduction   
-
-I spent the last week studying machine learning, algorithms, data analysis and statistics. I’m a firm believer that the best way to learn something is by doing. This is the result of my first machine learning project using Scikit-Learn, MatPlotLib and Pandas.  
+I spent the past couple of weeks studying machine learning, algorithms, data analysis and statistics. I’m a firm believer that the best way to learn something is by doing. This is the result of my first machine learning project using Scikit-Learn, MatPlotLib and Pandas.  
 
 Objectives:  
 
@@ -10,7 +8,7 @@ Objectives:
 
 ## 1.1. Context  
 
-The dataset that I used is a snapshot of the OpenPowerlifting Database as of April 2019. OepnPowerlifting is creating a public-domain archive of powerlifting history. Powerlifting is a sport in which competitors compete to lift the most weight for their class in three separate barbell lifts: Squat, Bench and Deadlift.  
+The dataset that I used is a snapshot of the OpenPowerlifting Database as of April 2019. OpenPowerlifting is creating a public-domain archive of powerlifting history. Powerlifting is a sport in which competitors compete to lift the most weight for their class in three separate barbell lifts: Squat, Bench and Deadlift.  
 
 ## 2.0 Summarize Data
 
@@ -60,8 +58,7 @@ Man:  59 kg, 66 kg, 74 kg, 83 kg, 93 kg, 105 kg, 120 kg, 120 kg+
 
 
 
-
-Women: 47 kg, 52 kg, 57 kg, 63 kg, 72 kg, 84 kg, 84 kg+
+Women: 43 kg, 47 kg, 52 kg, 57 kg, 63 kg, 72 kg, 84 kg, 84 kg+
 
 Those are the weightclasses currently used by the IPF (International Powerlifting Federation) 
 
@@ -102,7 +99,9 @@ def male_weight_class(x):
         return 121
         
 def female_weight_class(x):
-    if x <= 47:
+    if x <= 43:
+        return 43
+    if x <= 47 and x > 43:
         return 47
     if x <= 52 and x > 47:
         return 52
@@ -126,26 +125,56 @@ dataset = pd.concat([male, female])
 ## Strength classification, this is a snippet of the code, i did this for every weight class bot male and female 
 def strengthStandards(y):
 
-#93kg Class
-    if y['Sex'] == 'M' and y['WeightClassKg'] == 93 and y['TotalKg'] <= 342:
+#-120kg Class
+    if y['Sex'] == 'M' and y['WeightClassKg'] == 120 and y['TotalKg'] <= 305 or y['TotalKg'] < 375:
+        return 'Untrained'
+    if y['Sex'] == 'M' and y['WeightClassKg'] == 120 and y['TotalKg'] >= 375 and y['TotalKg'] < 500:
         return 'Beginner'
-    if y['Sex'] == 'M' and y['WeightClassKg'] == 93 and y['TotalKg'] > 342 and y['TotalKg'] <= 455:
+    if y['Sex'] == 'M' and y['WeightClassKg'] == 120 and y['TotalKg'] >= 500 and y['TotalKg'] < 607:
         return 'Intermediate'
-    if y['Sex'] == 'M' and y['WeightClassKg'] == 93 and y['TotalKg'] > 455 and y['TotalKg'] <= 545:
+    if y['Sex'] == 'M' and y['WeightClassKg'] == 120 and y['TotalKg'] >= 607 and y['TotalKg'] < 712:
         return 'Advanced'
-    if y['Sex'] == 'M' and y['WeightClassKg'] == 93 and y['TotalKg'] > 545 and y['TotalKg'] <= 632:
+    if y['Sex'] == 'M' and y['WeightClassKg'] == 120 and y['TotalKg'] >= 712 and y['TotalKg'] < 815:
         return 'Master'
-    if y['Sex'] == 'M' and y['WeightClassKg'] == 93 and y['TotalKg'] > 632 and y['TotalKg'] <= 722:
+    if y['Sex'] == 'M' and y['WeightClassKg'] == 120 and y['TotalKg'] >= 815 and y['TotalKg'] < 870:
         return 'Elite'
-    if y['Sex'] == 'M' and y['WeightClassKg'] == 93 and y['TotalKg'] > 722:
+    if y['Sex'] == 'M' and y['WeightClassKg'] == 120 and y['TotalKg'] >= 870:
         return 'World Class'
 
 
 ```
-## Assigning every athlete a strength level 
+
+Now it's just a simple matter of exporting cleaned data to a new file.
 
 
+```
+dataset["StrengthLevel"] = dataset.apply(strengthStandards, axis=1)
+keep_col = ['Sex', 'BodyweightKg','TotalKg','WeightClassKg','StrengthLevel']
+new_file = dataset[keep_col]
 
+new_file.to_csv('cleandata.csv', index=False)
+```
+
+Now that the data is ready, let's take a quick look at it. 
+
+```
+  Sex  BodyweightKg  TotalKg  WeightClassKg StrengthLevel
+0   M          82.1    317.5           83.0     Untrained
+1   M          98.6    510.0          105.0  Intermediate
+2   M          88.1    510.0           93.0  Intermediate
+3   M         116.7    175.0          120.0     Untrained
+4   M          67.1    535.0           74.0      Advanced
+5   M          82.5    345.0           83.0      Beginner
+6   M         117.7    685.0          120.0      Advanced
+7   M         109.1    200.0          120.0     Untrained
+8   M         113.2    130.0          120.0     Untrained
+9   M          98.1    195.0          105.0     Untrained
+
+```
+
+And that's it, 5 attributes with only the informations that we need. Now it's time to fullfill the objectives that we set ourself at the start of the article: Better understand the level of athletes that partake in Powerlifting competition. 
+
+## Better understand the level of athletes that partake in Powerlifting competition
 
 
 
