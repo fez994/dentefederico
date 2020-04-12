@@ -6,11 +6,11 @@ Objectives:
 
 - Better understand the level of athletes that partake in Powerlifting competition 
 
-## 1.1. Context  
+## Context  
 
 The dataset that I used is a snapshot of the OpenPowerlifting Database as of April 2019. OpenPowerlifting is creating a public-domain archive of powerlifting history. Powerlifting is a sport in which competitors compete to lift the most weight for their class in three separate barbell lifts: Squat, Bench and Deadlift.  
 
-## 2.0 Summarize Data
+## Data Prep
 
 Machine learning algorithms learn from data. It is critical that you feed them the right data for the problem you want to solve. Even if you have good data, you need to make sure that it is in a useful scale, format and even that meaningful features are included.
 Let's take a quick look into the OpenPowerlifting data: 
@@ -42,7 +42,7 @@ Result:
 
 1423354 instances, 37 attributes 
 
-Powerlifting is a pretty fragmented sport. Which means that there are hundreds if not thousand of different federations, each one with their own rules regarding weightclasses, equipment and drug tests. This is evident by taking a quick look at the unique weight classes in the data
+Powerlifting is a pretty fragmented sport. This means that there are hundreds if not thousands of different federations, each one with their own rules regarding weight classes, equipment and drug tests. This is evident by taking a quick look at the unique weight classes in the data.
 
 ```
 print('Number of unique weightclass: ' + str(dataset['WeightClassKg'].nunique()))
@@ -64,7 +64,7 @@ Those are the weightclasses currently used by the IPF (International Powerliftin
 
 ## Selecting Data
 
-You need to consider what data you actually need to address the question or problem you are working on. For this project, i'll only consider athletes that train RAW (No equipment), and i'll include both Tested and Non tested divisions. This is because the difference between natural athletes and enhanced athletes is not that big, and sometimes tested athletes are even stronger than untested ones. The only column that i'm going to keep for training are Gender, BodyweightKg, TotalKg. 
+You need to consider what data you need to address the question or problem you are working on. For this project, I'll only consider athletes that train RAW (No equipment), and I'll include both Tested and Non-tested divisions. This is because the difference between natural athletes and enhanced athletes is not that big, and sometimes tested athletes are even stronger than untested ones. The only column that I'm going to keep for training are Gender, BodyweightKg, TotalKg. 
 
 ### Strength Classification
 
@@ -172,7 +172,7 @@ The data is now ready, let's take a quick look at it.
 
 ```
 
-And that's it, 5 attributes with only the informations that we need. It's time to fullfill the objectives that we set ourself at the start of the article: Better understand the level of athletes that partake in Powerlifting competition. 
+And that's it, 5 attributes with only the pieces of information that we need. It's time to fulfill the objectives that we set ourselves at the start of the article: Better understand the level of athletes that partake in Powerlifting competition. 
 
 ## Strength Level of Powerlifters 
 
@@ -188,4 +188,32 @@ plt.show()
 ```
 
 ![alt text](https://i.imgur.com/CGW4VYV.png "0.2")
+
+It's evident that the vast majority of people that compete in powerlifting are **untrained**, suggesting that people start competing pretty early on in their careers this could be true for different reasons: 
+
+Powerlifting is a pretty cheap sport (compared to something like golf it is super cheap) but there are some costs associated with it. These things include:
+
+- The entry fee for the competition 
+- Joining a federation for a year 
+- Purchasing a singlet to compete in 
+- Cost of travel to and from the competition including a potential hotel stay
+
+Furthermore, the powerlifting community tends to encourage athletes to compete early to build experience to perform better in future competitions.
+
+Another interesting aspect of the data is that the number of advanced athletes is greater than the intermediates.
+
+**My final take:** 
+
+- The vast majority of people that competes are beginners (Technically untrained, but at the end of the day they are the same thing)
+- There are more advanced athletes than intermediate, this might suggest the idea that some athletes prefer to put on hold competing until they reach a decent level of strength. 
+
+
+
+
+
+
+
+
+
+
 
