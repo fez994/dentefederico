@@ -208,10 +208,71 @@ Another interesting aspect of the data is that the number of advanced athletes i
 - There are more advanced athletes than intermediate, this might suggest the idea that some athletes prefer to put on hold competing until they reach a decent level of strength. 
 
 
+# Algorithms Evaluation 
+
+Now it is time to create some models of the data and estimate their accuracy on unseen data.
+Here is what i'm going to do: 
+
+1. Separate out a validation dataset.
+2. Setup the test harness to use 10-fold cross validation.
+3. Build 3 different models to predict an athlete strength level
+4. Select the best model.
+
+I'll split the loaded dataset into two, 80% of which I will use to train our models and 20% that I'll hold back as a validation dataset.
+```
+# Replacing Male and Female gender with 0 and 1 so that our algorithms can process the information
+dataset['Sex'].replace(['M','F'],[0,1],inplace=True)
+
+#Split-out validation dataset
+array = dataset.values
+X = array[:, 0:4]
+Y = array[:, 4]
+validation_size = 0.20
+seed = 7
+X_train, X_validation, Y_train, Y_validation = train_test_split(X, Y, test_size=validation_size, random_state=seed)
+```
+
+I'll use 10-fold cross validation to estimate accuracy. This will split our dataset into 10 parts, train on 9 and test on 1 and repeat for all combinations of train-test splits. I'm using the metric of accuracy to evaluate models. This is a ratio of the number of correctly predicted instances divided by the total number of instances in the dataset multiplied by 100 to give a
+percentage (e.g. 95% accurate).
+
+I don't know which algorithms would be good on this problem or what configurations to use. 
+
+
+Let's evaluate three different algorithms:
+
+- Logistic Regression (LR).
+- Linear Discriminant Analysis (LDA).
+- k-Nearest Neighbors (KNN).
+
+I reset the random number seed before each run to ensure that the evaluation of each algorithm is performed using exactly the same data splits. It ensures the results are directly comparable. Let's build and evaluate our models:
+
+```
+models = []
+models.append(('LR', LogisticRegression()))
+models.append(('LDA', LinearDiscriminantAnalysis()))
+models.append(('KNN', KNeighborsClassifier()))
+
+results = []
+names = []
+for name, model in models:
+    kfold = KFold(n_splits=10, random_state=seed)
+    cv_results = cross_val_score(model, X_train, Y_train, cv=kfold, scoring='accuracy')
+    results.append(cv_results)
+    names.append(name)
+    msg = "%s: %f (%f)" % (name, cv_results.mean(), cv_results.std())
+    print(msg)
+
+
+```
 
 
 
 
+```
+LR: 0.794054 (0.003679)
+LDA: 0.828183 (0.002426)
+KNN: 0.998550 (0.000220)
+```
 
 
 
