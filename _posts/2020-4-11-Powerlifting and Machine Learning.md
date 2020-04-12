@@ -189,7 +189,7 @@ plt.show()
 
 ![alt text](https://i.imgur.com/CGW4VYV.png "0.2")
 
-It's evident that the vast majority of people that compete in powerlifting are **untrained**, suggesting that people start competing pretty early on in their careers this could be true for different reasons: 
+It's evident that the vast majority of people that compete in powerlifting are **untrained**, suggesting that people start competing pretty early on in their careers. This could be true for different reasons: 
 
 Powerlifting is a pretty cheap sport (compared to something like golf it is super cheap) but there are some costs associated with it. These things include:
 
