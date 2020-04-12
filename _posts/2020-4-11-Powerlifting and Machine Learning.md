@@ -68,7 +68,7 @@ You need to consider what data you need to address the question or problem you a
 
 ### Strength Classification
 
-Andrius Virbičianskas published tables (0.1) with athletes level based on the same data that i'm using. The separation between classes was done using standard deviations. For example World Class represents 0.63% of all lifters (that’s usually in World TOP 100 in respective weight categories) and is +2.5 std from mean.
+Andrius Virbičianskas published tables (like the one down below) with athletes level based on the same data that i'm using. The separation between classes was done using standard deviations. For example World Class represents 0.63% of all lifters (that’s usually in World TOP 100 in respective weight categories) and is +2.5 std from mean.
 
 ![alt text](https://i.imgur.com/DSoHewV.png "0.1")
 
