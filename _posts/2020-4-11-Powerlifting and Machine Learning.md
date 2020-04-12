@@ -235,10 +235,7 @@ X_train, X_validation, Y_train, Y_validation = train_test_split(X, Y, test_size=
 I'll use 10-fold cross validation to estimate accuracy. This will split our dataset into 10 parts, train on 9 and test on 1 and repeat for all combinations of train-test splits. I'm using the metric of accuracy to evaluate models. This is a ratio of the number of correctly predicted instances divided by the total number of instances in the dataset multiplied by 100 to give a
 percentage (e.g. 95% accurate).
 
-I don't know which algorithms would be good on this problem or what configurations to use. 
-
-
-Let's evaluate three different algorithms:
+I don't know which algorithms would be good on this problem or what configurations to use so let's evaluate three different algorithms:
 
 - Logistic Regression (LR).
 - Linear Discriminant Analysis (LDA).
