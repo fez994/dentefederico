@@ -263,7 +263,7 @@ for name, model in models:
 ```
 
 
-
+Result: 
 
 ```
 LR: 0.794054 (0.003679)
@@ -271,7 +271,55 @@ LDA: 0.828183 (0.002426)
 KNN: 0.998550 (0.000220)
 ```
 
+We can see that it looks like KNN has the largest estimated accuracy score (99.8%), it's no surprise that Logistic Regression showed such a low accuracy score, this is mainly baucase LR is used mainly for binary classification, which is not what i'm trying to achieve here. 
 
+# Predictions 
 
+Now we want to get an idea of the accuracy of the model on our validation dataset. This will give us an independent final
+check on the accuracy of the best model. It is important to keep a validation set just in case
+you made a slip during training, such as overfitting to the training set or a data leak. Both
+will result in an overly optimistic result. We can run the KNN model directly on the validation
+set and summarize the results as a final accuracy score, a confusion matrix and a classification
+report.
+
+```
+knn = KNeighborsClassifier()
+knn.fit(X_train, Y_train)
+predictions = knn.predict(X_validation)
+print(accuracy_score(Y_validation, predictions))
+print(confusion_matrix(Y_validation, predictions))
+print(classification_report(Y_validation, predictions))
+
+```
+
+Result : 
+
+```
+[[12807     0     0     0     6     1     0]
+ [    0  6195     0     2     0     3     0]
+ [    2     0  1039    12     0     0     3]
+ [    7     1     0 11391     0     0     0]
+ [    2     0     8     4  7064     0     2]
+ [    5     7     0     0     1 50251     0]
+ [   27     0     9    11     7     0   442]]
+              precision    recall  f1-score   support
+
+    Advanced       1.00      1.00      1.00     12814
+    Beginner       1.00      1.00      1.00      6200
+       Elite       0.98      0.98      0.98      1056
+Intermediate       1.00      1.00      1.00     11399
+      Master       1.00      1.00      1.00      7080
+   Untrained       1.00      1.00      1.00     50264
+ World Class       0.99      0.89      0.94       496
+
+   micro avg       1.00      1.00      1.00     89309
+   macro avg       0.99      0.98      0.99     89309
+weighted avg       1.00      1.00      1.00     89309
+```
+We can see that the accuracy is 0.99 or 99%. The confusion matrix provides an indication of
+the errors made. Finally the classification report provides a breakdown of each class by
+precision, recall, f1-score and support showing excellent results. 
+
+#Conclusion 
 
 
